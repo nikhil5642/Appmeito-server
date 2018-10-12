@@ -33,11 +33,13 @@ def event_data():
         adid=data['adid']
         macid=data['macid']
         appid=data['appid']
-        lattitude=data['lattitude']
-        longitude=data['longitude']
-        zipcode=data['code']
         event_json=data['event_json']
-        insert.new_event_data(adid,macid,appid,lattitude,longitude,zipcode,event_json)
+        for event in event_json:
+            lattitude=event['lattitude']
+            longitude=event['longitude']
+            zipcode=event['code']
+            event_now=event['event']
+            insert.new_event_data(adid,macid,appid,lattitude,longitude,zipcode,event_now)
         return jsonify(success=True,message=None)
     except:
         return jsonify(success=False,message="Invalid body")
