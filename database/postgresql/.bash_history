@@ -1,0 +1,3 @@
+ls
+psql
+psql
