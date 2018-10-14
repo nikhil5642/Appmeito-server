@@ -29,9 +29,9 @@ def test():
     return jsonify(success=False,message="Invalid Authentication")
 @app.route("/event_data",methods=['POST'])
 def event_data():
-        #if(check_auth(request)==False):
-        #return jsonify(success=False,message="Invalid Authentication")
-        #try: 
+    if(check_auth(request)==False):
+        return jsonify(success=False,message="Invalid Authentication")
+    try: 
         data=request.get_json(force=True)
         adid=data['adid']
         macid=data['macid']
@@ -45,8 +45,8 @@ def event_data():
             timestamp=event['timestamp']
             insert.new_event_data(adid,macid,appid,lattitude,longitude,zipcode,event_now,timestamp)
         return jsonify(success=True,message=None)
-        #except:
-        #return jsonify(success=False,message="Invalid body")
+    except:
+        return jsonify(success=False,message="Invalid body")
 
 @app.route("/user_installation",methods=['POST'])
 def user_installation():
