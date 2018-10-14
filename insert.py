@@ -17,16 +17,16 @@ def new_user(adid,macid,appid,installation_status,user_category,activity,device_
     cursor.execute("insert into users(adid,macid,appid,installation_status,user_category, activity, device_info) values(%s,%s,%s,%s,%s,%s,%s)",(adid,macid,appid,installation_status,user_category,json.dumps([activity]),json.dumps(device_info)))
     conn.commit()
 
-def new_event_data(adid,macid,appid,lattitude,longitude,zipcode,event_json):
+def new_event_data(adid,macid,appid,lattitude,longitude,zipcode,event_json,time):
     col_arr=event_json.keys()
     command="insert into "+appid+"_events(adid , macid, appid, lattitude, longitude, pincode"
     for i in col_arr:
         command=command+","+i
-    command=command+") values('%s','%s','%s','%s','%s','%s'"%(adid,macid,appid,lattitude,longitude,zipcode)   
+    command=command+",last_modified) values('%s','%s','%s','%s','%s','%s'"%(adid,macid,appid,lattitude,longitude,zipcode)   
     for i in col_arr:
         command=command+(",'%s'"%(event_json[i]))
-    command=command+")"
+    command=command+",'%s')"%datetime.fromtimestamp(time/1000.0)
     cursor.execute(command)
     conn.commit()
 
-#new_client('thomso','thomso2018')
+#new_client('appmeito','appmeito_test')

@@ -18,7 +18,7 @@ def event_data_table(app_id,arr_columns):
     command="create table "+app_id+"_events( id serial primary key, adid varchar, macid varchar,appid varchar, lattitude varchar, longitude varchar, pincode varchar"
     for x in arr_columns:
         command=command+","+x+" varchar"
-    command=command+")"
+    command=command+",last_modified timestamp)"
     cursor.execute(command)
     conn.commit()
 
@@ -27,7 +27,7 @@ def drop_event_data_table(app_id):
     conn.commit()
    
 #client_data_table()
-user_data_table()
-#event_data_table("thomso",['page'])
+#user_data_table()
+#event_data_table("appmeito",['page'])
         
     
