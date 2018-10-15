@@ -14,8 +14,7 @@ def check_auth(request):
         app_id=request.headers['app_id']
         app_secret=request.headers['app_secret']
         cursor.execute("select * from clients where appid='%s' and app_secret='%s'"%(app_id,app_secret))
-        rows=cursor.fetchall()
-        if(len(rows)!=0):
+        if(cursor.rowcount!=0):
             return True
         else:
             return False        
@@ -62,8 +61,7 @@ def user_installation():
         activity=data['activity']
         device_info=data['device_info']
         cursor.execute("select * from users where adid='%s' and appid='%s'"%(adid,appid))
-        rows=cursor.fetchall()
-        if(len(rows)!=0):
+        if(cursor.rowcount!=0):
             update.user_activity(adid,appid,activity)
         else:
             insert.new_user(adid,macid,appid,installation_status,user_category,activity,device_info)
@@ -84,11 +82,8 @@ def user_uninstallation():
         user_category=None
         activity=data['activity']
         device_info=data['device_info']
-        
         update.user_activity(adid,appid,activity)
         return jsonify(success=True,message=None)
     except:
         return jsonify(success=False,message="Invalid body")
 
-if __name__ == '__main__':
-    app.run(host='0.0.0.0',port=5000)
